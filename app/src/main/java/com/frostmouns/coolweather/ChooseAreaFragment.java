@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ChooseAreaFragment extends Fragment {
     public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY = 1;
     public static final int LEVEL_COUNTY = 2;
+    private static final String TAG = "HHHH";
 
     private ProgressDialog mProgressDialog;
 
@@ -64,7 +66,7 @@ public class ChooseAreaFragment extends Fragment {
         mBtnBack = view.findViewById(R.id.btn_back);
         mLvIteam = view.findViewById(R.id.lv_iteam);
 
-        mAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mDataList);
+        mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mDataList);
         mLvIteam.setAdapter(mAdapter);
         return view;
     }
@@ -130,6 +132,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         }else {
             int provinceCode = selectdProvince.getCode();
+            Log.i(TAG, "provinceCode: " + provinceCode);
             String address = "http://guolin.tech/api/china/" + provinceCode;
             queryFromServer(address, "city");
         }
@@ -150,7 +153,9 @@ public class ChooseAreaFragment extends Fragment {
         }else {
             int provinceCode = selectdProvince.getCode();
             int cityCode = selectedCity.getCode();
-            String address = "http://guolin.tech/api/china" + provinceCode + "/" + cityCode;
+            Log.i(TAG, "provinceCode: "+ provinceCode);
+            Log.i(TAG, "cityCode: "+ cityCode);
+            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
             queryFromServer(address, "county");
         }
     }
